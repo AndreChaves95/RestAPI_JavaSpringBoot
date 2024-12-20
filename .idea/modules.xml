@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/JavaSpringBoot.iml" filepath="$PROJECT_DIR$/.idea/JavaSpringBoot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/javaspring/javaspring.iml" filepath="$PROJECT_DIR$/javaspring/javaspring.iml" />
+    </modules>
+  </component>
+</project>
