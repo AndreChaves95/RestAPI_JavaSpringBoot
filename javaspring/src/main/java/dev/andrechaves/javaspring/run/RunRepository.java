@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component // so it can be Spring to manage this
 public class RunRepository {
@@ -16,12 +17,29 @@ public class RunRepository {
         return runs;
     }
 
-    Run findById(int id) {
+    // Here: returning an Optional because it allows to operate on objects without having a null value present
+    Optional<Run> findById(int id) {
         return runs.stream()
                 .filter(run -> run.id() == id)
-                .findFirst()
-                .get();
+                .findFirst();
     }
+
+    void create(Run run) {
+        runs.add(run);
+    }
+
+    void update(Run run, Integer id) {
+        Optional<Run> existingRun = findById(id);
+        if (existingRun.isPresent()) {
+            runs.set(runs.indexOf(existingRun.get()), run);  // with Optional we need .get()
+        }
+    }
+
+    void delete(Integer id) {
+        runs.removeIf(run -> run.id().equals(id));
+    }
+
+
 
     @PostConstruct //used on a method that needs to be executed after dependency injection is done to perform any initialization
     private void init() {

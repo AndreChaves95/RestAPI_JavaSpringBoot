@@ -1,8 +1,13 @@
 package dev.andrechaves.javaspring.run;
 
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController                 // expects to receive a request and returns a response as a JSON by default
@@ -27,10 +32,28 @@ public class RunController {
 
     @GetMapping("/{id}")
     Run findById(@PathVariable Integer id) {
-        return runRepository.findById(id);
+        Optional<Run> run = runRepository.findById(id);
+        if (run.isEmpty()) {
+            throw new RunNotFoundException();
+        }
+        return run.get();
     }
 
-    //@PostMapping("/{id}")
+    @ResponseStatus(HttpStatus.CREATED)  // This will make it return 201 with notification of creation
+    @PostMapping("")
+    void create(@Valid @RequestBody Run run) {  // RequestBody used so it can handle with JSON request
+        runRepository.create(run);
+    }
 
-    //@DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)  // This will make it return 204 as it works but there is nothing to return
+    @PutMapping("/{id}")
+    void update(@Valid @RequestBody Run run, @PathVariable Integer id) {  // RequestBody used so it can handle with JSON request
+        runRepository.update(run, id);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    void delete(@PathVariable Integer id) {  // RequestBody used so it can handle with JSON request
+        runRepository.delete(id);
+    }
 }

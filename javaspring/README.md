@@ -49,6 +49,15 @@
 ###### Singleton
 RunRepository is suppose to have only one instance of it when running program - it should not be used new RunRepository()
 
-## @PathVariable vs @PathParam
+### @PathVariable vs @PathParam
 - PathParam is from JAX-RS so it can only be used on REST
 - PathVariable is from Spring so it works on both REST and MVC
+
+
+## Validations
+Add dependency: spring-boot-starter-validation
+Use like: @NotEmpty, @NotNull, ....
+
+- @Valid -> Spring will validate fields with annotations before call the method
+and will throw a 400 Bad Request
+
