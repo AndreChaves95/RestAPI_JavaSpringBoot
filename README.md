@@ -56,7 +56,7 @@ RunRepository is suppose to have only one instance of it when running program - 
 
 ## Validations
 Add dependency: spring-boot-starter-validation
-Use like: @NotEmpty, @NotNull, ....
+- Use like: @NotEmpty, @NotNull, ....
 
 - @Valid -> Spring will validate fields with annotations before call the method
-and will throw a 400 Bad Request
+-and will throw a 400 Bad Request
