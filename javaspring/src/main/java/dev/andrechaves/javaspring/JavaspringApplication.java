@@ -1,13 +1,12 @@
 package dev.andrechaves.javaspring;
 
-import dev.andrechaves.javaspring.run.Location;
 import dev.andrechaves.javaspring.run.Run;
+import dev.andrechaves.javaspring.run.RunRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDateTime;
@@ -23,11 +22,11 @@ public class JavaspringApplication {
 	}
 
 	@Bean
-	CommandLineRunner runner() {
+	CommandLineRunner runner(RunRepository runRepository) {
 		// This runs after Application context has been created (all Beans created)
 		return args -> {
-			Run run = new Run(1, "Title1", LocalDateTime.now(), LocalDateTime.now().plusMinutes(40), 10, Location.OUTDOOR);
-			log.info("Run: " + run);
+			Run run = new Run(1, "Title1", LocalDateTime.now(), LocalDateTime.now().plusMinutes(40), 10, "Out");
+			runRepository.create(run);   // This way there is always one instance created when start Application
 		};
 	}
 

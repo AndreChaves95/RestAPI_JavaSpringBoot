@@ -14,7 +14,7 @@ public record Run(
         LocalDateTime completedOn,
         @Positive
         Integer distance,
-        Location location) {
+        String location) {
 
     // Validation of data inserted by the user
     public Run {

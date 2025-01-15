@@ -55,9 +55,19 @@ RunRepository is suppose to have only one instance of it when running program - 
 
 
 ## Validations
-Add dependency: spring-boot-starter-validation
-Use like: @NotEmpty, @NotNull, ....
+Add dependency: spring-boot-starter-validation -> Allows to use: @NotEmpty, @NotNull, ....
 
 - @Valid -> Spring will validate fields with annotations before call the method
 and will throw a 400 Bad Request
+
+## Use H2 as DB
+
+- schema.sql to create queries
+- data.sql to insert data 
+
+###### Repository
+Communicates with database:
+- using jdbcClient.sql("xxx") -> query to return data from DB
+- using jdbcClient.sql("xxx").query(Class) -> map result from DB
+
 

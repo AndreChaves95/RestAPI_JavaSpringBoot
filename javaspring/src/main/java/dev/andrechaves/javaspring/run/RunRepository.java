@@ -1,53 +1,74 @@
 package dev.andrechaves.javaspring.run;
 
-import jakarta.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Component // so it can be Spring to manage this
 public class RunRepository {
 
-    private List<Run> runs = new ArrayList<>();
+    private static final Logger log = LoggerFactory.getLogger(RunRepository.class);
 
-    List<Run> findAll() {
-        return runs;
+    //Using as Dependency Injection
+    private final JdbcClient jdbcClient;
+
+    public RunRepository(JdbcClient jdbcClient) {
+        this.jdbcClient = jdbcClient;
+    }
+
+    public List<Run> findAll() {
+        return jdbcClient.sql("SELECT * FROM Run")
+                .query(Run.class)
+                .list();
     }
 
     // Here: returning an Optional because it allows to operate on objects without having a null value present
-    Optional<Run> findById(int id) {
-        return runs.stream()
-                .filter(run -> run.id() == id)
-                .findFirst();
+    Optional<Run> findById(Integer id) {
+        return jdbcClient.sql("SELECT * FROM Run WHERE id = :id")
+                .param("id", id)
+                .query(Run.class)
+                .optional();
     }
 
-    void create(Run run) {
-        runs.add(run);
+    public void create(Run run) {
+        var created = jdbcClient.sql("INSERT INTO Run (id, title, started_on, completed_on, distance, location)\n" +
+                "VALUES (?,?,?,?,?,?)")
+                .params(List.of(run.id(), run.title(), run.startedOn(), run.completedOn(), run.distance(), run.location()))
+                .update();
+
+        // Using this as it is expected that only one row is affected (creation of 1 Run)
+        Assert.state(created == 1, "Failed to create new Run: " + run.title());
     }
 
-    void update(Run run, Integer id) {
-        Optional<Run> existingRun = findById(id);
-        if (existingRun.isPresent()) {
-            runs.set(runs.indexOf(existingRun.get()), run);  // with Optional we need .get()
-        }
+    public void update(Run run, Integer id) {
+        var updated = jdbcClient.sql("UPDATE Run SET title=?, started_on=?, completed_on=?, distance=?, location=? WHERE id=?")
+                .params(List.of(run.id(), run.title(), run.startedOn(), run.completedOn(), run.distance(), run.location()))
+                .update();
+
+        Assert.state(updated == 1, "Failed to update Run: " + run.title());
     }
 
-    void delete(Integer id) {
-        runs.removeIf(run -> run.id().equals(id));
+    public void delete(Integer id) {
+        var updated = jdbcClient.sql("DELETE FROM Run WHERE id = :id")
+                .param("id", id)
+                .update();
+
+        Assert.state(updated == 1, "Failed to delete Run with id: " + id);
     }
 
+    public void saveAll(List<Run> runs) {
+        runs.stream().forEach(this::create);
+    }
 
-
-    @PostConstruct //used on a method that needs to be executed after dependency injection is done to perform any initialization
-    private void init() {
-        Run run1 = new Run(1, "Title1", LocalDateTime.now(), LocalDateTime.now().plusMinutes(40), 10, Location.OUTDOOR);
-        runs.add(run1);
-        Run run2 = new Run(2, "Title2", LocalDateTime.now(), LocalDateTime.now().plusMinutes(40), 11, Location.INDOOR);
-        runs.add(run2);
-        Run run3 = new Run(3, "Title3", LocalDateTime.now(), LocalDateTime.now().plusMinutes(40), 12, Location.OUTDOOR);
-        runs.add(run3);
+    public List<Run> findByLocation(String location) {
+        return jdbcClient.sql("SELECT * FROM Run WHERE location = :location")
+                .param("location", location)
+                .query(Run.class)
+                .list();
     }
 }

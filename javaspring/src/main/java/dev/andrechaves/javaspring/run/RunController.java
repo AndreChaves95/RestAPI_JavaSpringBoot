@@ -9,7 +9,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Optional;
 
-
 @RestController                 // expects to receive a request and returns a response as a JSON by default
 @RequestMapping("/api/runs")    // this way its not needed to duplicate this part of the route
 public class RunController {
