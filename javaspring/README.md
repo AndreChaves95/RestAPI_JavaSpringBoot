@@ -61,13 +61,16 @@ Add dependency: spring-boot-starter-validation -> Allows to use: @NotEmpty, @Not
 and will throw a 400 Bad Request
 
 ## Use H2 as DB
-
 - schema.sql to create queries
-- data.sql to insert data 
 
 ###### Repository
 Communicates with database:
 - using jdbcClient.sql("xxx") -> query to return data from DB
 - using jdbcClient.sql("xxx").query(Class) -> map result from DB
+
+
+## Dependency Injection
+- Spring knows that creating an instance of RunsJsonDataLoader it is dependent that 
+an instance of RunRepository also exists, injecting it to the constructor
 
 

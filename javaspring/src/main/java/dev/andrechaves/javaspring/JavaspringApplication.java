@@ -21,13 +21,4 @@ public class JavaspringApplication {
 		log.info("Application started successfully!");
 	}
 
-	@Bean
-	CommandLineRunner runner(RunRepository runRepository) {
-		// This runs after Application context has been created (all Beans created)
-		return args -> {
-			Run run = new Run(1, "Title1", LocalDateTime.now(), LocalDateTime.now().plusMinutes(40), 10, "Out");
-			runRepository.create(run);   // This way there is always one instance created when start Application
-		};
-	}
-
 }
