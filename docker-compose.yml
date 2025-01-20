@@ -1,0 +1,10 @@
+services:
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=javaspringapp'
+      - 'POSTGRES_PASSWORD=secretpassword'
+      - 'POSTGRES_USER=andre'
+    ports:
+      - '5432:5432'
+      # 5432 -> to run container / :5432 -> to run locally

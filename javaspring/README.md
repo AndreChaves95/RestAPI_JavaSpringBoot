@@ -60,8 +60,8 @@ Add dependency: spring-boot-starter-validation -> Allows to use: @NotEmpty, @Not
 - @Valid -> Spring will validate fields with annotations before call the method
 and will throw a 400 Bad Request
 
-## Use H2 as DB
-- schema.sql to create queries
+## Use H2 as in-memory DB 
+- schema.sql to create queries -> is only picked up by embedded dbs by default
 
 ###### Repository
 Communicates with database:
@@ -73,4 +73,13 @@ Communicates with database:
 - Spring knows that creating an instance of RunsJsonDataLoader it is dependent that 
 an instance of RunRepository also exists, injecting it to the constructor
 
+## Docker
+
+### docker-compose.yml file
+- image:latest -> might not be a good practice if all members are supposed to use the same version
+- ports:'1111' -> on container side it will run on this port
+
+## PostgresSQL DB
+- Spring will create a JDBC connection and read from docker-compose file at runtime
+to fill properties
 
