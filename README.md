@@ -1,22 +1,19 @@
 # Concepts Learning
 
-## Use of Beans
-- @Bean -> instance of a class with metadata around it (manageable by Spring)
-
 
 ## Structure
 - It can be used something like:
-- packages: main 
-   |
-   |  - controllers
-   |  - models
-   |  - services
+- packages: main
+  |
+  |  - controllers
+  |  - models
+  |  - services
 
 - But controllers will need to communicate with classes outside of the package.
-- Instead it can be used this technique/architecture:
+- Instead, it can be used this technique/architecture:
 
 #### Package by Feature:
-- Here its a structure like this:
+- Here it is a structure like this:
 - packages: main
 - || users
   ||  - controllers
@@ -31,6 +28,10 @@
 ####### Organized it in a way that each feature has their own Controller/Model/Service classes.
 
 
+## Use of Beans
+- @Bean -> instance of a class with metadata around it (manageable by Spring)
+
+
 ## Using "Record"
 
 #### It can be created a Record instead of a class when an object’s only purpose is to contain public data and it will be immutable.
@@ -43,7 +44,7 @@
 - View -> Rest API - JSON returned as data
 - Controller -> Receive request, delegate to services and return a response (dont put logic here)
 
-#### Repositort Pattern
+#### Repository Pattern
 - Used this for data access
 
 ###### Singleton
@@ -82,3 +83,19 @@ an instance of RunRepository also exists, injecting it to the constructor
 ## PostgresSQL DB
 - Spring will create a JDBC connection and read from docker-compose file at runtime
 to fill properties
+
+## Spring Data 
+- Allows to define an interface in Spring Data and turn it into an implementation at runtime
+- It is not needed to write all the CRUD methods code (allows to bypass this)
+
+### This project uses Spring Data JDBC (Class Run Repository)
+-> Allows to write dynamic queries from repository`s method name -> Example: findByAttribute()
+
+##### ListCrudRepository interface
+- Already provides methods saveAll, findAll and findAllById
+- And extends CrudRepository with all CRUD methods available
+
+### Spring Data JPA (Java Persistence Abstraction)
+- By default, it uses Hibernate -> ORM (Object–Relational Mapping) tool
+---> provides a framework for mapping an object-oriented domain model to a relational database
+
