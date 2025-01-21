@@ -5,5 +5,6 @@ CREATE TABLE IF NOT EXISTS Run (
     completed_on TIMESTAMP NOT NULL,
     distance INT,
     location VARCHAR(250),
+    version INT,
     PRIMARY KEY (id)
 );
