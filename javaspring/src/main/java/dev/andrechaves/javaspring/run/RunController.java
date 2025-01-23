@@ -24,7 +24,7 @@ public class RunController {
         return "Homepage!";
     }
 
-    @GetMapping("")
+    @GetMapping("/all")
     List<Run> findAll() {
         return runRepository.findAll();
     }

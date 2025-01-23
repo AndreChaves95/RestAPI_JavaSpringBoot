@@ -99,3 +99,15 @@ to fill properties
 - By default, it uses Hibernate -> ORM (Object–Relational Mapping) tool
 ---> provides a framework for mapping an object-oriented domain model to a relational database
 
+
+## REST Clients
+
+- A higher-level abstraction built on top of WebClient used to send HTTP requests to interact with REST APIs
+- It allows to test, debug, and integrate APIs while handling responses like status codes and body content
+
+### HTTP Interface
+- It allows to communicate with another service by defining an interface 
+- It is not needed to write the low-level code implementation
+
+---> Dependency is already added with Spring Web
+
