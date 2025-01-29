@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class RunNotFoundException extends RuntimeException{
 
     public RunNotFoundException() {
-        super("Instance Not Found !!!");
+        super("Run Not Found !!!");
     }
 }

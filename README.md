@@ -110,3 +110,22 @@ to fill properties
 - It is not needed to write the low-level code implementation
 
 ---> Dependency is already added with Spring Web
+
+
+## Testing
+
+- Spring Boot Starter Test -> its only loaded on tests module
+-> This imports Spring Boot test modules and also JUnit
+
+###### SpringBootTest
+
+- It loads the entire application context which will make tests slower
+
+
+### Slice Tests
+
+-> This allows to only load the necessary things for the test
+
+##### JdbcTest
+
+- JDBC Tests are Transactional and roll back at the end of each test

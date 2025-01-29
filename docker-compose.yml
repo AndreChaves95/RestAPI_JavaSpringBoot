@@ -6,5 +6,5 @@ services:
       - 'POSTGRES_PASSWORD=secretpassword'
       - 'POSTGRES_USER=andre'
     ports:
-      - '5432:5432'
-      # 5432 -> to run container / :5432 -> to run locally
+      - '5430:5431'
+      # 5430 -> to run container / :5431 -> to run locally
